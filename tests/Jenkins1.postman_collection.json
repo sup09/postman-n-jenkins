@@ -1,0 +1,277 @@
+{
+	"info": {
+		"name": "Jenkins",
+		"_postman_id": "277fdb1a-d9f6-c0b8-62c2-95de123d1226",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AccountNotFound_x copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ef819e17-b719-4970-b3d3-9314dd6b8c7f",
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);",
+							"var schema = {",
+							"  \"$id\": \"http://SAMQC84RTM/pos171Supraja/api/account/card/7777777\",",
+							"  \"type\": \"object\",",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-06/schema#\",",
+							"  \"additionalProperties\": false,",
+							"  \"properties\": {",
+							"    \"httpStatus\": {",
+							"      \"type\": \"integer\"",
+							"    },",
+							"    \"errorCode\": {",
+							"      \"type\": \"string\"",
+							"    },",
+							"    \"details\": {",
+							"      \"type\": \"string\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"httpStatus\",",
+							"    \"errorCode\",",
+							"    \"details\"",
+							"  ]",
+							"};",
+							"tv4.validate(responseJSON,schema);",
+							"if(responseCode.code === 500)",
+							"{",
+							"//  - Validating Schema -  ",
+							"eval(globals.commonTest1)();   ",
+							"",
+							"//  - Validating http Status Code and Content Type and Response Time -  ",
+							"eval(globals.Test_500_1)();",
+							"",
+							"// - Validating Values of fields (http Status,Error Code, Error Details)",
+							"eval(globals.Test_500_2)();",
+							"",
+							"}",
+							"else",
+							"{",
+							"/*  Display Error Details   */",
+							"eval(globals.Test_500_3)();",
+							"",
+							"}",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7ee3e6b6-f086-4bdf-93ee-475acec42689",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"postman.setGlobalVariable(\"commonTest1\",() => ",
+							"{",
+							"    //  - Validating Schema -",
+							"    tests[\"<-------------------------------------------------------------------->\"] = true;",
+							"    console.log(\"<--------------------------------------------------------->\");",
+							"    tests[\"Schema is Valid\"] = tv4.validate(responseJSON, schema);",
+							"    console.log(\"Reward Schema is Valid ----> \" + tv4.validate(responseJSON, schema));  ",
+							"});",
+							"",
+							"postman.setGlobalVariable(\"Test_500_1\",() => ",
+							"{",
+							" //  - Validating http Status Code,Content Type, Response Time -   ",
+							"    tests[\"<--------------------------------------------------------------------->\"] = true;",
+							"    console.log(\"<--------------------------------------------------------->\");",
+							"    tests[\"Status code is 500\"] =  responseCode.code === 500;",
+							"    console.log(\"Status code is 500\");",
+							"    tests[\"Content - Type is Present\"] =  postman.getResponseHeader(\"Content-Type\");",
+							"    console.log(\"Content - Type is Present\");",
+							"    tests[\"Response Time is \"+  responseTime] =  responseTime < 200;",
+							"    console.log(\"Response Time is \"+  responseTime);",
+							"    tests[\"<----------------------------------------------------------------------->\"] = true;",
+							"    console.log(\"<--------------------------------------------------------->\");",
+							"});",
+							"",
+							"",
+							"postman.setGlobalVariable(\"Test_500_2\",() => ",
+							"{",
+							"    ",
+							"// - Validating Values of fields (http Status,Error Code, Error Details)",
+							"",
+							"var e1 =responseJSON.httpStatus;",
+							"var e2=responseJSON.errorCode;",
+							"var e3=responseJSON.details;",
+							"tests[\"---->Http Status should be 500.Actual Value is \"+ e1] =e1 === 500 ;",
+							"console.log(\"---->Http Status should be 500.Actual Value is \"+ e1);",
+							"",
+							"tests[\"---->Error Code should be \"+pm.globals.get(\"ExpectedCode\")+\".Actual Value is \"+ e2] =e2 === pm.globals.get(\"ExpectedCode\") ;",
+							"console.log(\"---->Error Code should be \"+pm.globals.get(\"ExpectedCode\")+\".Actual Value is \"+ e2);",
+							"tests[\"---->Details should be \"+pm.globals.get(\"ExpectedMessage\")+\".Actual Value is  -\"+ e3] =e3 === pm.globals.get(\"ExpectedMessage\") ;",
+							"console.log(\"---->Details should be \"+pm.globals.get(\"ExpectedMessage\")+\" .Actual Value is \"+ e3);",
+							"",
+							"tests[\"<r-----------------End of Test Case------------------------------>\"] = true;",
+							"console.log(\"<---------------End of Test Case------------------->\"); ",
+							"",
+							"});",
+							"",
+							"postman.setGlobalVariable(\"Test_500_3\",() => ",
+							"{",
+							"",
+							"//  Display Error Details   ",
+							"  tests[\"Test Case Failed  ---->  \" + responseJSON.details] = responseCode.code === 500;",
+							"  console.log(\"Test Case Failed  ---->\"  + responseJSON.details);",
+							"});",
+							"pm.globals.unset(\"ExpectedCode\");",
+							"pm.globals.set(\"ExpectedCode\", \"E7100\");",
+							"",
+							"pm.globals.unset(\"ExpectedMessage\");",
+							"pm.globals.set(\"ExpectedMessage\", \"E7100 - Account Not Found\");",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-MMHayes-Auth",
+						"value": "{{X-MMHAYES-AUTH}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{serverName}}/{{warName}}/api/account/card/7777777",
+					"protocol": "http",
+					"host": [
+						"{{serverName}}"
+					],
+					"path": [
+						"{{warName}}",
+						"api",
+						"account",
+						"card",
+						"7777777"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "InactiveAccount_x copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);",
+							"var schema = {",
+							"  \"$id\": \"http://SAMQC84RTM/pos171Supraja/api/account/card/7777777\",",
+							"  \"type\": \"object\",",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-06/schema#\",",
+							"  \"additionalProperties\": false,",
+							"  \"properties\": {",
+							"    \"httpStatus\": {",
+							"      \"type\": \"integer\"",
+							"    },",
+							"    \"errorCode\": {",
+							"      \"type\": \"string\"",
+							"    },",
+							"    \"details\": {",
+							"      \"type\": \"string\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"httpStatus\",",
+							"    \"errorCode\",",
+							"    \"details\"",
+							"  ]",
+							"};",
+							"tv4.validate(responseJSON,schema);",
+							"if(responseCode.code === 500)",
+							"{",
+							"//  - Validating Schema -  ",
+							"eval(globals.commonTest1)();   ",
+							"",
+							"//  - Validating http Status Code and Content Type and Response Time -  ",
+							"eval(globals.Test_500_1)();",
+							"",
+							"// - Validating Values of fields (http Status,Error Code, Error Details)",
+							"eval(globals.Test_500_2)();",
+							"",
+							"}",
+							"else",
+							"{",
+							"/*  Display Error Details   */",
+							"eval(globals.Test_500_3)();",
+							"",
+							"}",
+							""
+						],
+						"id": "5c0a024a-edc3-4d29-9cac-a9291ecfb3b2",
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.globals.unset(\"ExpectedCode\");",
+							"pm.globals.set(\"ExpectedCode\", \"E7101\");",
+							"",
+							"pm.globals.unset(\"ExpectedMessage\");",
+							"pm.globals.set(\"ExpectedMessage\", \"E7101 - Account is Inactive\");",
+							"",
+							""
+						],
+						"id": "d49c65bf-3d42-460d-b073-fab842333c49",
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-MMHayes-Auth",
+						"value": "{{X-MMHAYES-AUTH}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{serverName}}/{{warName}}/api/account/card/17112",
+					"protocol": "http",
+					"host": [
+						"{{serverName}}"
+					],
+					"path": [
+						"{{warName}}",
+						"api",
+						"account",
+						"card",
+						"17112"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

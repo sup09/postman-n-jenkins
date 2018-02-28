@@ -1,0 +1,16 @@
+{
+  "name": "postman-n-jenkins",
+  "version": "1.0.0",
+  "description": "project for demo",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "api-tests-production": "newman run tests/Jenkins1.postman_collection.json -e tests/automation.postman_environment.json"
+  },
+  "author": "supraja",
+  
+  "dependencies": {
+    "newman": "^3.9.3"
+  }
+}
